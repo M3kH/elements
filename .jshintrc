@@ -1,0 +1,11 @@
+{
+	"newcap": false,
+	"expr": true,
+	"eqeqeq": true,
+	"latedef": true,
+	"strict": true,
+	"trailing": true,
+	"browser": true,
+	"multistr": true,
+	"predef": [ "define", "require", "requirejs", "console"]
+}
