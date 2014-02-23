@@ -7,5 +7,6 @@
 	"trailing": true,
 	"browser": true,
 	"multistr": true,
+	"loopfunc": true,
 	"predef": [ "define", "require", "requirejs", "console"]
 }

@@ -1,4 +1,4 @@
-define(function (require) {
+define(['helpers/extend'], function (extend, require) {
 	'use strict';
 
 	var UnitView = require('view/unit');
@@ -27,6 +27,8 @@ define(function (require) {
 				this.id));
 		},
 	};
+
+	Unit.extend = extend;
 
 	return Unit;
 });
