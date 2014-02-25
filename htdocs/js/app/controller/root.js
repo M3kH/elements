@@ -20,18 +20,21 @@ define(function (require) {
 
 			// Root view for all main controllers to bind their views to.
 			this.rootView = this.addView(new RootView({
+				controller: this,
 				el: document.body,
 				envName: this.options.env.name
 			}));
 
-			this.game = this.addController(new GameController({
-				name: 'First Elements',
-				parentView: this.rootView
-			}), 'game');
-
 			this.menu = this.addController(new MenuController({
 				parentView: this.rootView
 			}), 'menu');
+
+			this.game = this.addController(new GameController({
+				name: 'First Elements',
+				parentView: this.rootView,
+				menu: this.menu
+			}), 'game');
+
 		},
 
 		run: function () {

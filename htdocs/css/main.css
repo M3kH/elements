@@ -1,0 +1,12 @@
+/* line 3, ../../src/sass/main.sass */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* line 8, ../../src/sass/main.sass */
+body {
+  background: #f1eed9;
+  font-family: Helvetica;
+}

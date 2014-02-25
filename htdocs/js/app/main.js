@@ -16,7 +16,7 @@ define(function (requirejs) {
 	var
 		RootController = require('controller/root');
 
-	var One = new RootController({
+	var Root = new RootController({
 		env: Environment
 	});
 

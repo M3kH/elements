@@ -7,7 +7,7 @@ define(function (require) {
 		// Installer
 		mixinViews: function () {
 			this._views = {};
-
+			this.options.defaultViewOptions = {};
 			this.parentView = this.options.parentView || undefined;
 		},
 
@@ -35,7 +35,6 @@ define(function (require) {
 			}
 		},
 		removeView: function (role) {
-			console.log('removing view', role);
 			role = role || this._defaultRole;
 
 			var v = this._views[role];

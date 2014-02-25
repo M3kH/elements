@@ -1,32 +1,44 @@
 define(function (require) {
 	'use strict';
 
-	var UnitView = require('view/unit');
+	var
+		Controller = require('controller'),
+
+		// Views
+		UnitView = require('view/unit');
 
 	var unitId = 0;
 
-	var Unit = function (name, options) {
-		if (!name) throw new Error('unnamed unit');
+	// A Unit is a special kind of Controller. According to
+	// it's mom.
+	function Unit () { Controller.apply(this, arguments); }
 
-		this.id = ++unitId;
-		this.name = name;
-		this.options = options || {};
-
-		//this.view = new UnitView({
-		//	name: this.name
-		//});
-		this.init(this.options);
-	};
-
-	Unit.prototype = {
+	_.extend(Unit.prototype, Controller.prototype, {
 		name: 'unit',
 
 		init: function (options) {
+			// A Unit needs a name
+			if (!options.name) throw new Error('nameless unit');
+			this.name = options.name;
+
+			this.unitId = ++unitId;
+
+			this.addView(new UnitView({
+				controller: this,
+			}));
+
+			console.log(this.options);
+			this.parentView.el.appendChild(this.renderView().el);
+
 			console.log(_.sprintf('Unit %s %s initialized',
 				this.name,
-				this.id));
+				this.unitId));
 		},
-	};
+
+		position: function (t, l) {
+			return this.getView().position(t,l);
+		}
+	});
 
 	return Unit;
 });

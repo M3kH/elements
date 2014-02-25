@@ -4,6 +4,7 @@ define(function (require) {
 	var
 		ControllersMixin = require('mixins/controllers'),
 		ViewsMixin = require('mixins/views'),
+		EventsMixin = require('mixins/events'),
 
 		controllerId = 0,
 		defaultOptions = {};
@@ -15,13 +16,15 @@ define(function (require) {
 		this._init.apply(this, arguments);
 	}
 
-	_.extend(Controller.prototype, ControllersMixin, ViewsMixin, {
+	_.extend(Controller.prototype, ControllersMixin, ViewsMixin, EventsMixin, {
+
 		_defaultRole: 'root',
 
 		_init: function () {
 			// We're using some mixins
 			this.mixinControllers();
 			this.mixinViews();
+			this.mixinEvents();
 
 			this.init.apply(this, arguments);
 			this.post.apply(this, arguments);

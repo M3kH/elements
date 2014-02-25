@@ -11,18 +11,17 @@ define(function (require) {
 	_.extend(MenuView.prototype, View.prototype, {
 		classList: ['menu'],
 
-		menu: {
-			main: [
-			'hoi',
-			'wij',
-			'zijn',
-			'het',
-			'menu'
-			]
+		domEvents: {
+			'.main .item.create-unit': { 'click' : '_eCreateUnit' }
 		},
 
 		init: function () {
 			console.log('menuview:init');
+		},
+
+		_eCreateUnit: function () {
+			console.log('create unit click');
+			this.trigger('createUnit');
 		},
 
 		renderContent: function () {

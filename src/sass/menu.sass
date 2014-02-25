@@ -1,0 +1,49 @@
+@import vars
+@import compass/css3
+
+$h: 30px
+
+.menu
+	position: fixed
+	z-index: 1000
+	top: 0
+	left: 0
+	width: 100%
+	height: $h
+	background: $c-white-ish
+	+box-shadow(0 1px 2px rgba(0,0,0,.1))
+	
+	.logo
+		background: darken($c-white-ish, 10)
+		position: absolute
+		top: 0
+		left: 0
+		height: 100%
+		line-height: $h
+		font-size: $f-s-l
+		font-weight: $f-w-s
+		color: $c-dark-grey
+		padding: 0 10px
+		+text-shadow(0 -1px 0 rgba(255,255,255,.1))
+
+	.main
+		position: absolute
+		top: 0
+		right: 0
+		list-style: none
+		height: $h
+
+		.item
+			display: block
+			float: left
+			height: $h
+			padding: 0 10px
+			font-size: $f-s-s
+			color: $c-dark-brown
+			line-height: $h
+			cursor: pointer
+
+			&:hover
+				background: $c-dark-brown
+				color: $c-white-ish
+
