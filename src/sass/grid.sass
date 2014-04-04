@@ -1,0 +1,14 @@
+@import vars
+@import compass/css3
+
+.grid
+	position: absolute
+
+	.cell
+		+transition(all .3s)
+		position: absolute
+		background: $c-dark-blue
+		border: 1px solid $c-blue
+
+		&:hover
+			border-color: $c-orange

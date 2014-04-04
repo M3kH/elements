@@ -12,16 +12,20 @@ define(function (require) {
 		classList: ['menu'],
 
 		domEvents: {
-			'.main .item.create-unit': { 'click' : '_eCreateUnit' }
+			'.main .item.create-building': { 'click': '_eCreateBuilding' },
+			'.main .item.create-unit': { 'click': '_eCreateUnit' }
 		},
 
 		init: function () {
 			console.log('menuview:init');
 		},
 
+		_eCreateBuilding: function () {
+			this.trigger('create:building');
+		},
+
 		_eCreateUnit: function () {
-			console.log('create unit click');
-			this.trigger('createUnit');
+			this.trigger('create:unit');
 		},
 
 		renderContent: function () {

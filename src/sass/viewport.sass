@@ -1,0 +1,27 @@
+@import vars
+@import compass/css3
+
+$w: 800px
+$h: 800px
+
+.viewport
+	position: absolute
+	z-index: 1
+	top: 0
+	left: 0
+	bottom: 0
+	right: 0
+	width: $w
+	height: $h
+	margin: auto
+	background: $c-blacker
+	border: 1px solid $c-dark-grey
+	border-radius: 2px
+	+box-shadow(0 0 20px rgba(0,0,0,.3), inset 0 0 5px rgba(0,0,0,.8))
+
+.grid
+	margin: auto
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0

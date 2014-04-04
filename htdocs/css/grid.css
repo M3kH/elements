@@ -1,0 +1,18 @@
+/* line 4, ../../src/sass/grid.sass */
+.grid {
+  position: absolute;
+}
+/* line 7, ../../src/sass/grid.sass */
+.grid .cell {
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  position: absolute;
+  background: #292c37;
+  border: 1px solid #3299bb;
+}
+/* line 13, ../../src/sass/grid.sass */
+.grid .cell:hover {
+  border-color: #ff9900;
+}
