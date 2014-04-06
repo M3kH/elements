@@ -16,9 +16,12 @@ define(function (require) {
 			// 1: bottom
 			[{z:-1}],
 			// 2: neighbors
+			/*
 			[{x:-1,y:-1},{x:-1},{x:-1,y:1},
 			{y:-1},            {y:1},
 			{x:-1,y:1},{x:1},{x:1,y:1}]
+			*/
+			[{x:-1},{y:-1},{y:1},{x:1}],
 		],
 
 		_occupant: null,

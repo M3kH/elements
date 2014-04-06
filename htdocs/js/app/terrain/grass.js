@@ -14,11 +14,16 @@ define(function (require) {
 			create: {
 				base: 1,
 				adjacent: {
-					matchType: {
-						2: 1.2, // neighbor
-					}
-				}
-			}
+					2: { // neigbors
+						matchType: {
+							grass: 4,
+							stone: 0.7
+						}
+					},
+
+				},
+
+			},
 		},
 
 		init: function (options) {}

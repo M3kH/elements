@@ -12,10 +12,13 @@ define(function (require) {
 		// probability multipliers
 		probability: {
 			create: {
-				base: 0.6, // How likely are we to exist?
+				base: 0.2, // How likely are we to exist?
 				adjacent: { // Multipliers based on adj types (top, neigbor, etc)
-					matchType: {
-						2: 1.5, // neigbor
+					2: { // neigbors
+						matchType: {
+							stone: 4,
+							grass: 0.9
+						}
 					}
 				}
 			}

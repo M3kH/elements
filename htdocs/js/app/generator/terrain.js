@@ -34,14 +34,9 @@ define(function (require) {
 		matchType: function (multipliers, cellType, adjacent) {
 			var m = 1;
 
-			// multipliers are defined per adjacent type. Check only those types.
-			_.each(_.keys(multipliers), function (type) {
-				if (adjacent[type]) {
-					_.each(adjacent[type], function (adjCell) {
-						if (adjCell.occupant() && adjCell.occupant().type === cellType) {
-							m = m * multipliers[type];
-						}
-					});
+			_.each(adjacent, function (neighbor) {
+				if (neighbor.occupant() && multipliers[neighbor.occupant().type]) {
+					m = m * multipliers[neighbor.occupant().type];
 				}
 			});
 
@@ -53,19 +48,30 @@ define(function (require) {
 
 			// Create probability range
 			_.each(this.types, function (type) {
-				var p, i, probability = type.prototype.probability, adjType, neighbor;
+				var p, i, probability = type.prototype.probability;
 
 				// base probability
 				p = probability.create.base * self.probMultiplier;
 
-				// do we need to check for matching neighbors?
+				// do we need to check for adjacent cells?
 				if (probability.create.adjacent) {
+					// check only adjacent types defined
+					_.each(_.keys(probability.create.adjacent), function (adjType) {
+						if (adjacent[adjType]) {
+							if (probability.create.adjacent[adjType].matchType) {
+								p = p * self.matchType(probability.create.adjacent[adjType].matchType, type.prototype.type, adjacent[adjType]);
+							}
+						}
+					});
+
+					/*
 					// matchTyping
 					if (probability.create.adjacent.matchType) {
 						var matchTypeM = self.matchType(probability.create.adjacent.matchType, type.prototype.type, adjacent);
 
 						p = p * matchTypeM;
 					}
+					*/
 				}
 
 				// add p amount of this type to range

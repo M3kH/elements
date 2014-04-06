@@ -34,7 +34,7 @@ define(function (require) {
 
 
 			/// Create grid and viewport and tie it all together.
-			this.grid = new Grid(100,100,5);
+			this.grid = new Grid(50,50,2);
 			// Terrain lives on the bottom level of our grid.
 			this.terrain = new Terrain(this.grid, 0);
 
@@ -46,7 +46,7 @@ define(function (require) {
 			// Create and render viewport
 			this.viewport = this.addView(new Viewport(Settings.viewport), 'viewport');
 			this.parentView.el.appendChild(this.viewport.render());
-			this.viewport.el.appendChild(rdr.grid(this.grid).render());
+			this.viewport.insertGrid(rdr.grid(this.grid).render());
 		},
 
 		_setupMenuListeners: function () {

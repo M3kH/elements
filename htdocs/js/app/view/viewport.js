@@ -2,7 +2,10 @@ define(function (require) {
 	'use strict';
 
 	var
-		View = require('view');
+		View = require('view'),
+
+		// Templates
+		template = require('text!templates/viewport.html');
 
 	function Viewport () { View.apply(this, arguments); }
 
@@ -18,6 +21,14 @@ define(function (require) {
 		install: function () {
 			console.log('viewport:install');
 		},
+
+		insertGrid: function (grid) {
+			this.el.querySelector('.grid-container').appendChild(grid);
+		},
+
+		renderContent: function () {
+			this.el.innerHTML = this.template(template, {});
+		}
 	});
 
 	return Viewport;

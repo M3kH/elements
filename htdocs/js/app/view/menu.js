@@ -12,8 +12,12 @@ define(function (require) {
 		classList: ['menu'],
 
 		domEvents: {
-			'.main .item.create-building': { 'click': '_eCreateBuilding' },
-			'.main .item.create-unit': { 'click': '_eCreateUnit' }
+			'.main .item.create-building': {
+				'click': '_eCreateBuilding'
+			},
+			'.main .item.create-unit': {
+				'click': '_eCreateUnit'
+			},
 		},
 
 		init: function () {

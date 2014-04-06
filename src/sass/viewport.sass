@@ -4,6 +4,8 @@
 $w: 800px
 $h: 800px
 
+$z-controls: 20000
+
 .viewport
 	position: absolute
 	z-index: 1
@@ -18,10 +20,74 @@ $h: 800px
 	border: 1px solid $c-grey-dark
 	border-radius: 2px
 	+box-shadow(0 0 20px rgba(0,0,0,.3), inset 0 0 5px rgba(0,0,0,.8))
+	border: 20px solid $c-dark-blue
+	
+	.controls
+		position: absolute
+		z-index: $z-controls
+		top: 0
+		left: 0
+		width: 100%
+		background: rgba(0,0,0,.4)
+		height: $s-normal
 
-.grid
-	margin: auto
-	top: 0
-	left: 0
-	right: 0
-	bottom: 0
+		.item
+			+transition(all .2s)
+			cursor: pointer
+			display: inline
+			padding: 0 $s-small
+			font-size: $f-s-m
+			color: $c-white
+			height: $s-normal
+			line-height: $s-normal
+			border: none
+
+			&:hover
+				padding: 0 $s-small $s-small
+				background: rgba($c-orange, .5)
+
+	.grid-container
+		position: absolute
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+		overflow: auto
+
+	.grid
+		margin: auto
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+
+	&.zoom.z10 .grid
+		+transition(transform .4s)
+		+scale(.1,.1)
+	&.zoom.z20 .grid
+		+transition(transform .4s)
+		+scale(.2,.2)
+	&.zoom.z30 .grid
+		+transition(transform .4s)
+		+scale(.3,.3)
+	&.zoom.z40 .grid
+		+transition(transform .4s)
+		+scale(.4,.4)
+	&.zoom.z50 .grid
+		+transition(transform .4s)
+		+scale(.5,.5)
+	&.zoom.z60 .grid
+		+transition(transform .4s)
+		+scale(.6,.6)
+	&.zoom.z70 .grid
+		+transition(transform .4s)
+		+scale(.7,.7)
+	&.zoom.z80 .grid
+		+transition(transform .4s)
+		+scale(.8,.8)
+	&.zoom.z90 .grid
+		+transition(transform .4s)
+		+scale(.9,.9)
+	&.zoom.z100 .grid
+		+transition(transform .4s)
+		+scale(1,1)

@@ -7,8 +7,8 @@ define(function (require) {
 		cell: {
 			tagName: 'div',
 			classList: ['cell'],
-			w: 8,
-			h: 8
+			w: 16,
+			h: 16
 		}
 	};
 
