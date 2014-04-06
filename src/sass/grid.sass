@@ -7,8 +7,10 @@
 	.cell
 		+transition(all .3s)
 		position: absolute
-		background: $c-dark-blue
-		border: 1px solid $c-blue
+		background: $c-darker-blue
+		border: 1px solid $c-flat-blue
+		cursor: crosshair
 
 		&:hover
-			border-color: $c-orange
+			z-index: $z-grid-hover !important
+			+box-shadow(0 0 10px $c-white)

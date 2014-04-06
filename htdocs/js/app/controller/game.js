@@ -7,6 +7,7 @@ define(function (require) {
 		Grid = require('grid'),
 
 		Rdr = require('rdr'),
+		Terrain = require('terrain'),
 
 		Viewport = require('view/viewport'),
 
@@ -31,13 +32,20 @@ define(function (require) {
 			this.menu = this.options.menu;
 			this._setupMenuListeners();
 
-			this.grid = new Grid(20,20);
 
+			/// Create grid and viewport and tie it all together.
+			this.grid = new Grid(100,100,5);
+			// Terrain lives on the bottom level of our grid.
+			this.terrain = new Terrain(this.grid, 0);
+
+			// In the future we could fetch/set pre-generated terrains.
+			this.terrain.generate();
+
+
+
+			// Create and render viewport
 			this.viewport = this.addView(new Viewport(Settings.viewport), 'viewport');
-
-			// Put it there!
 			this.parentView.el.appendChild(this.viewport.render());
-
 			this.viewport.el.appendChild(rdr.grid(this.grid).render());
 		},
 

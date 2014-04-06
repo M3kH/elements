@@ -7,8 +7,8 @@ define(function (require) {
 		cell: {
 			tagName: 'div',
 			classList: ['cell'],
-			w: 20,
-			h: 20
+			w: 8,
+			h: 8
 		}
 	};
 
@@ -27,38 +27,43 @@ define(function (require) {
 			this.el.classList.add(this.options.classList);
 
 			_.extend(this.el.style, {
-				width: (this.options.cell.w * this.grid.matrix.length+1)+'px',
-				height: (this.options.cell.h * this.grid.matrix[0].length+1)+'px'
+				width: (this.options.cell.w * this.grid.w+1)+'px',
+				height: (this.options.cell.h * this.grid.h+1)+'px'
 			});
 		},
 
-		createCell: function (options) {
-			var cell = document.createElement(this.options.cell.tagName);
-			options = _.extend(options, this.options.cell);
+		createCell: function (cell, options) {
+			var el = document.createElement(this.options.cell.tagName);
+			options = _.extend(options || {}, this.options.cell);
 
-			cell.classList.add(options.classList);
+			el.classList.add(options.classList);
 
-			_.extend(cell.style, {
+			// Add base and type of cell occupant as classes
+			if (!cell.isEmpty()) {
+				el.classList.add(cell.occupant().base, cell.occupant().type);
+			}
+
+			_.extend(el.style, {
 				width: options.w+'px',
 				height: options.h+'px',
-				top: (options.x * options.w)+'px',
-				left: (options.y * options.h)+'px',
+				top: (cell.x * options.w)+'px',
+				left: (cell.y * options.h)+'px',
+				zIndex: cell.z,
+				display: (cell.isEmpty()) ? 'none' : 'block'
 			});
 
-			return cell;
+			return el;
 		},
 
 		renderGrid: function () {
-			var y=0, x=0;
-			for (var i=0; i<this.grid.matrix.length; i++) {
-				y = 0;
-				for (var j=0; j<this.grid.matrix[i].length; j++) {
-					var cell = this.createCell({x:x,y:y});
+			for (var d=0; d<this.grid.matrix.length; d++) {
+				for (var w=0; w<this.grid.matrix[d].length; w++) {
+					for (var h=0; h<this.grid.matrix[d][w].length; h++) {
+					var cell = this.createCell(this.grid.matrix[d][w][h]);
 
 					this.el.appendChild(cell);
-					y++;
+					}
 				}
-				x++;
 			}
 		},
 

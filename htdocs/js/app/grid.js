@@ -1,9 +1,12 @@
-define(function () {
+define(function (require) {
 	'use strict';
 
-	function Grid(w,h) {
+	var Cell = require('grid/cell');
+
+	function Grid(w,h,d) {
 		this.w = w;
 		this.h = h;
+		this.d = d;
 
 		this.create();
 	}
@@ -12,14 +15,22 @@ define(function () {
 		matrix: [],
 
 		create: function () {
-			for (var i=0; i<this.h; i++) {
-				this.matrix[i] = new Array(this.w);
+			// Create three dimensions
+			for (var d=0; d<this.d; d++) {
+				// Depth
+				this.matrix[d] = new Array(this.w);
+				for (var w=0; w<this.w; w++) {
+					// Width
+					this.matrix[d][w] = new Array(this.h);
+					// Height
+					for (var h=0; h<this.h; h++) {
+						this.matrix[d][w][h] = new Cell(w,h,d,this);
+					}
+				}
 			}
 		},
 
 		get: function (x, y) {
-			console.log('haai');
-
 			return this.matrix[x][y];
 		}
 	};
