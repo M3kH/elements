@@ -12,6 +12,9 @@ define(function (require) {
 		classList: ['menu'],
 
 		domEvents: {
+			'.main .item.create-grid': {
+				'click': '_eCreateGrid'
+			},
 			'.main .item.create-building': {
 				'click': '_eCreateBuilding'
 			},
@@ -20,8 +23,10 @@ define(function (require) {
 			},
 		},
 
-		init: function () {
-			console.log('menuview:init');
+		init: function () {},
+
+		_eCreateGrid: function () {
+			this.trigger('create:grid');
 		},
 
 		_eCreateBuilding: function () {
@@ -33,8 +38,6 @@ define(function (require) {
 		},
 
 		renderContent: function () {
-			console.log('menuview:render');
-
 			this.el.innerHTML = this.template(menuTemplate, {
 				menu: this.menu
 			});

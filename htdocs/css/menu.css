@@ -1,4 +1,4 @@
-/* line 6, ../../src/sass/menu.sass */
+/* line 4, ../../src/sass/menu.sass */
 .menu {
   position: fixed;
   z-index: 1000;
@@ -6,13 +6,13 @@
   left: 0;
   width: 100%;
   height: 30px;
-  background: #424242;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
-/* line 16, ../../src/sass/menu.sass */
+/* line 12, ../../src/sass/menu.sass */
 .menu .logo {
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  -o-transition: opacity 0.2s;
+  transition: opacity 0.2s;
   background: #f1e092;
   position: absolute;
   top: 0;
@@ -22,10 +22,16 @@
   font-size: 18px;
   font-weight: 200;
   color: #424242;
-  padding: 0 10px;
+  padding: 0 20px 10px;
+  border-bottom: 10px solid #f1eed9;
   text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1);
+  opacity: 0.3;
 }
-/* line 29, ../../src/sass/menu.sass */
+/* line 28, ../../src/sass/menu.sass */
+.menu .logo:hover {
+  opacity: 0.5;
+}
+/* line 31, ../../src/sass/menu.sass */
 .menu .main {
   position: absolute;
   top: 0;
@@ -33,8 +39,12 @@
   list-style: none;
   height: 30px;
 }
-/* line 36, ../../src/sass/menu.sass */
+/* line 38, ../../src/sass/menu.sass */
 .menu .main .item {
+  -webkit-transition: background 0.2s;
+  -moz-transition: background 0.2s;
+  -o-transition: background 0.2s;
+  transition: background 0.2s;
   display: block;
   float: left;
   height: 30px;
@@ -44,8 +54,7 @@
   line-height: 30px;
   cursor: pointer;
 }
-/* line 46, ../../src/sass/menu.sass */
+/* line 49, ../../src/sass/menu.sass */
 .menu .main .item:hover {
-  background: #2e221f;
-  color: #f7edbf;
+  background: rgba(255, 153, 0, 0.5);
 }

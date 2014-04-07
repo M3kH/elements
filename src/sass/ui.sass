@@ -1,0 +1,21 @@
+@import vars
+@import compass/css3
+
+.btn
+	+transition(color .2s, background .2s)
+	cursor: pointer
+	padding: $s-small $s-normal
+	background: darken($c-blue, 2)
+	color: $c-grey-light
+	border: 2px solid transparent
+	border-bottom: 2px solid lighten($c-blue-dark, 10)
+	font-size: $f-s-l
+	font-weight: $f-w-xs
+	+border-radius(2px)
+
+	&:hover
+		color: $c-white
+		border-color: lighten($c-blue, 5)
+
+	&:active
+		background: lighten($c-blue, 10)

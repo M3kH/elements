@@ -10,10 +10,9 @@
   transition: all 0.3s;
   position: absolute;
   background: #13151a;
-  border: 1px solid #123642;
   cursor: crosshair;
 }
-/* line 14, ../../src/sass/grid.sass */
+/* line 13, ../../src/sass/grid.sass */
 .grid .cell:hover {
   z-index: 10000 !important;
   -webkit-box-shadow: 0 0 10px #f1eed9;

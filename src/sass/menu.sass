@@ -1,49 +1,50 @@
 @import vars
 @import compass/css3
 
-$h: 30px
-
 .menu
 	position: fixed
 	z-index: 1000
 	top: 0
 	left: 0
 	width: 100%
-	height: $h
-	background: $c-grey-dark
-	+box-shadow(0 1px 2px rgba(0,0,0,.1))
+	height: $s-menu
 	
 	.logo
+		+transition(opacity .2s)
 		background: darken($c-white-ish, 10)
 		position: absolute
 		top: 0
 		left: 0
 		height: 100%
-		line-height: $h
+		line-height: $s-menu
 		font-size: $f-s-l
 		font-weight: $f-w-s
 		color: $c-grey-dark
-		padding: 0 10px
+		padding: 0 $s-normal $s-small
+		border-bottom: 10px solid $c-white
 		+text-shadow(0 -1px 0 rgba(255,255,255,.1))
+		opacity: .3
+
+		&:hover
+			opacity: .5
 
 	.main
 		position: absolute
 		top: 0
 		right: 0
 		list-style: none
-		height: $h
+		height: $s-menu
 
 		.item
+			+transition(background .2s)
 			display: block
 			float: left
-			height: $h
+			height: $s-menu
 			padding: 0 $s-small
 			font-size: $f-s-s
 			color: $c-white
-			line-height: $h
+			line-height: $s-menu
 			cursor: pointer
 
 			&:hover
-				background: $c-brown-dark
-				color: $c-white-ish
-
+				background: rgba($c-orange, .5)

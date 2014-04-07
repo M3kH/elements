@@ -27,33 +27,64 @@ define(function (require) {
 		units: [],
 
 		init: function () {
+			var self = this;
+
 			console.log('gamecontroller:init');
 
 			this.menu = this.options.menu;
 			this._setupMenuListeners();
 
-
-			/// Create grid and viewport and tie it all together.
-			this.grid = new Grid(50,50,2);
-			// Terrain lives on the bottom level of our grid.
-			this.terrain = new Terrain(this.grid, 0);
-
-			// In the future we could fetch/set pre-generated terrains.
-			this.terrain.generate();
-
-
-
 			// Create and render viewport
 			this.viewport = this.addView(new Viewport(Settings.viewport), 'viewport');
 			this.parentView.el.appendChild(this.viewport.render());
-			this.viewport.insertGrid(rdr.grid(this.grid).render());
+
+			setTimeout(this.install.bind(this));
+		},
+
+		install: function () {
 		},
 
 		_setupMenuListeners: function () {
+			this.menu.getView().on('create:grid', this.createGrid.bind(this));
 			this.menu.getView().on('create:unit', this.createUnit.bind(this));
 			this.menu.getView().on('create:building', this.createBuilding.bind(this));
 
 		},
+
+		createGrid: function () {
+			var self = this;
+
+			this.viewport.showNotice('creating grid');
+			this.viewport.removeGrid();
+
+			setTimeout(function () {
+				self._createGrid();
+				self.viewport.hideNotice();
+			}, 1000);
+		},
+
+		_createGrid: function () {
+			// Create grid and viewport and tie it all together.
+			console.time('create:grid');
+			this.grid = new Grid(64,64,10);
+
+			console.timeEnd('create:grid');
+
+			// Terrain lives on the bottom level of our grid.
+			console.time('create:terrain');
+			this.terrain = new Terrain(this.grid, 0);
+
+			// In the future we could fetch/set pre-generated terrains.
+			this.terrain.generate();
+			console.timeEnd('create:terrain');
+
+			console.time('create:render');
+			this.viewport.insertGrid(rdr.grid(this.grid).render());
+			console.timeEnd('create:render');
+
+			this.viewport.hideNotice();
+		},
+
 
 		createBuilding: function () {
 			alert('create:building');

@@ -3,22 +3,23 @@ define(function (require) {
 
 	var TerrainAbstract = require('terrain/abstract');
 
-	function Grass() { TerrainAbstract.apply(this, arguments); }
+	function Water() { TerrainAbstract.apply(this, arguments); }
 
-	_.extend(Grass.prototype, TerrainAbstract, {
+	_.extend(Water.prototype, TerrainAbstract, {
 		base: 'terrain',
-		type: 'grass',
+		type: 'water',
 
 		//probability multipliers
 		probability: {
 			create: {
-				base: 1.1,
+				base: 0.5,
 				adjacent: {
 					2: { // neigbors
 						matchType: {
-							_random: 0.8,
-							grass: 9,
-							water: 0
+							_random: 0.6,
+							water: 8,
+							grass: 0,
+							stone: 0,
 						}
 					},
 
@@ -30,5 +31,5 @@ define(function (require) {
 		init: function (options) {}
 	});
 
-	return Grass;
+	return Water;
 });

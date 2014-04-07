@@ -1,20 +1,40 @@
-/* line 14, ../../src/sass/terrain.sass */
+/* line 19, ../../src/sass/terrain.sass */
 .cell.terrain.grass {
   background: #bada5f;
-  border-color: #bcdb63;
-  -webkit-box-shadow: inset 0 0 40px #a7cd2c, inset 0 0 10px #a7cd2c;
-  -moz-box-shadow: inset 0 0 40px #a7cd2c, inset 0 0 10px #a7cd2c;
-  box-shadow: inset 0 0 40px #a7cd2c, inset 0 0 10px #a7cd2c;
 }
-/* line 19, ../../src/sass/terrain.sass */
+/* line 22, ../../src/sass/terrain.sass */
 .cell.terrain.grass:hover {
   z-index: 10000 !important;
-  -webkit-box-shadow: inset 0 0 40px #a7cd2c, 0 0 10px #f1eed9;
-  -moz-box-shadow: inset 0 0 40px #a7cd2c, 0 0 10px #f1eed9;
-  box-shadow: inset 0 0 40px #a7cd2c, 0 0 10px #f1eed9;
 }
-/* line 23, ../../src/sass/terrain.sass */
+/* line 25, ../../src/sass/terrain.sass */
 .cell.terrain.stone {
   background: #aab3ab;
-  border-color: #c5cbc6;
+}
+/* line 28, ../../src/sass/terrain.sass */
+.cell.terrain.water {
+  background: #1693a5;
+}
+/* line 30, ../../src/sass/terrain.sass */
+.cell.terrain.water:nth-child(2n) {
+  background: #1797aa;
+}
+/* line 32, ../../src/sass/terrain.sass */
+.cell.terrain.water:nth-child(3n) {
+  background: #179bae;
+}
+/* line 34, ../../src/sass/terrain.sass */
+.cell.terrain.water:nth-child(4n) {
+  background: #189fb3;
+}
+/* line 36, ../../src/sass/terrain.sass */
+.cell.terrain.water:nth-child(5n) {
+  background: #158fa1;
+}
+/* line 38, ../../src/sass/terrain.sass */
+.cell.terrain.water:nth-child(6n) {
+  background: #18a1b5;
+}
+/* line 40, ../../src/sass/terrain.sass */
+.cell.terrain.water:nth-child(7n) {
+  background: #18a3b7;
 }

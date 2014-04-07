@@ -3,13 +3,14 @@ define(function (require) {
 
 	var
 		Grass = require('terrain/grass'),
-		Stone = require('terrain/stone');
+		Stone = require('terrain/stone'),
+		Water = require('terrain/water');
 
 	function TerrainGenerator () {}
 
 	TerrainGenerator.prototype = {
-		types: [Grass, Stone],
-		probMultiplier: 10,
+		types: [Grass, Stone, Water],
+		probMultiplier: 2,
 
 		// We get a partial grid (2d) to generate on.
 		generate: function (grid) {
@@ -27,16 +28,24 @@ define(function (require) {
 			return this.probability(cell, adjacent);
 		},
 
-		random: function (types) {
-			return new types[Math.floor(Math.random() * types.length)]();
+		random: function (probRange) {
+			return new this.types[probRange[Math.floor(Math.random() * probRange.length)]]();
 		},
 
 		matchType: function (multipliers, cellType, adjacent) {
 			var m = 1;
 
 			_.each(adjacent, function (neighbor) {
-				if (neighbor.occupant() && multipliers[neighbor.occupant().type]) {
-					m = m * multipliers[neighbor.occupant().type];
+				var r = Math.random();
+
+				if (!neighbor._occupant) { return; }
+
+				var occupant = neighbor.occupant();
+
+				if (occupant && multipliers[occupant.type]) {
+					if (r < multipliers._random || 1) {
+						m = m * multipliers[occupant.type];
+					}
 				}
 			});
 
@@ -44,43 +53,54 @@ define(function (require) {
 		},
 
 		probability: function (cell, adjacent) {
-			var self = this, probValues = {}, probRange = [];
+			var self = this, probValues = {}, probRange = [], i=0;
 
 			// Create probability range
 			_.each(this.types, function (type) {
-				var p, i, probability = type.prototype.probability;
+				var p, probability = type.prototype.probability, lastType;
 
 				// base probability
 				p = probability.create.base * self.probMultiplier;
 
 				// do we need to check for adjacent cells?
 				if (probability.create.adjacent) {
+
 					// check only adjacent types defined
 					_.each(_.keys(probability.create.adjacent), function (adjType) {
 						if (adjacent[adjType]) {
+
+							// matchTyping
 							if (probability.create.adjacent[adjType].matchType) {
 								p = p * self.matchType(probability.create.adjacent[adjType].matchType, type.prototype.type, adjacent[adjType]);
 							}
+
 						}
 					});
-
-					/*
-					// matchTyping
-					if (probability.create.adjacent.matchType) {
-						var matchTypeM = self.matchType(probability.create.adjacent.matchType, type.prototype.type, adjacent);
-
-						p = p * matchTypeM;
-					}
-					*/
 				}
 
-				// add p amount of this type to range
-				for (i=0; i<p; i++) {
-					probRange.push(type);
-				}
+
+				probValues[i] = p;
+				i++;
 			});
 
-			return this.random(probRange.length ? probRange : this.types);
+			var probSum = 0;
+			_.each(probValues, function (n) { probSum += n; });
+
+			var r = Math.random() * probSum;
+			var lower = 0;
+			var type = null;
+			for (var j in probValues) {
+				if (r >= lower && r < lower + probValues[j]) {
+					console.log('MATCHED A TYPE. CUNT!');
+					type = this.types[j];
+					break;
+				}
+
+				lower += probValues[j];
+			}
+
+			return new type();
+			// return this.random(probRange.length ? probRange : this.types);
 
 			/*
 			_.each(adjacent, function (neighbor) {
