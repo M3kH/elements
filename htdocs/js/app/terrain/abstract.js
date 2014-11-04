@@ -3,6 +3,7 @@ define(function (require) {
 
 	function TerrainAbstract(cell, options) {
 		this.cell = cell;
+		this.sprite = null;
 		this.options = options || {};
 
 		this.init && this.init(options);

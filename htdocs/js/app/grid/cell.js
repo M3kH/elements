@@ -10,22 +10,12 @@ define(function (require) {
 	}
 
 	Cell.prototype = {
-		adjacentTypes: [
-			// 0: top
-			[{z:1}],
-			// 1: bottom
-			[{z:-1}],
-			// 2: neighbors
-			/*
-			[{x:-1,y:-1},{x:-1},{x:-1,y:1},
-			{y:-1},            {y:1},
-			{x:-1,y:1},{x:1},{x:1,y:1}]
-			*/
-			[{x:-1},{y:-1},//{y:1},{x:1},
-			{x:-1,y:-1},{x:-1,y:1},{x:1,y:-2}
-			//{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1}
-			],
-		],
+		adjacentTypes: {
+			top: [{z:1}],
+			bottom: [{z:-1}],
+			neighbors4: [{x:-1},{y:-1},{y:1},{x:1}],
+			neighbors8: [{x:-1},{y:-1},{y:1},{x:1},{x:1,y:1},{x:1,y:-1},{x:-1,y:1},{x:-1,y:-1}],
+		},
 
 		_occupant: null,
 
@@ -41,25 +31,28 @@ define(function (require) {
 			return this._occupant;
 		},
 
-		adjacent: function (type) {
-			var self = this, adjacent = [];
+		adjacent: function (type, depth) {
+			var self = this, matrix = this.grid.matrix, adjacent = [];
+			depth = depth || 1;
 
 			if (!type) {
-				return this.allAdjacent();
+				return this.allAdjacent(depth);
 			}
 
-			_.each(this.adjacentTypes[type], function (mod) {
-				var cell = null;
+			for (var i=1; i<depth+1; i++) {
+				_.each(this.adjacentTypes[type], function (mod) {
+					// determine adjacent position and add to output if it exists.
+					var pos = {
+						x: self.x + ((mod.x || 0) * depth),
+						y: self.y + ((mod.y || 0) * depth),
+						z: self.z + ((mod.z || 0) * depth)
+					};
 
-				try {
-					cell = self.grid.matrix
-						[(self.z + mod.z || 0)]
-						[(self.x + mod.x || 0)]
-						[(self.y + mod.y || 0)];
-				} catch (e) {}
-
-				cell && adjacent.push(cell);
-			});
+					if (matrix[pos.z] && matrix[pos.z][pos.x] && matrix[pos.z][pos.x][pos.y]) {
+						adjacent.push(matrix[pos.z][pos.x][pos.y]);
+					}
+				});
+			}
 
 			return adjacent;
 		},

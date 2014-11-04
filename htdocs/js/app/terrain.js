@@ -3,16 +3,13 @@ define(function (require) {
 
 	var TerrainGenerator = require('generator/terrain');
 
-	function Terrain (grid, d) {
-		this.grid = grid;
-		this.level = grid.matrix[d];
-	}
+	function Terrain () {}
 
 	Terrain.prototype = {
-		generate: function () {
-			TerrainGenerator.generate(this.level);
+		generate: function (grid, options) {
+			return TerrainGenerator.generate(grid, options);
 		}
 	};
 
-	return Terrain;
+	return new Terrain();
 });

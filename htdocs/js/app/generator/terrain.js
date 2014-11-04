@@ -2,6 +2,8 @@ define(function (require) {
 	'use strict';
 
 	var
+		Grid = require('grid'),
+
 		Grass = require('terrain/grass'),
 		Stone = require('terrain/stone'),
 		Water = require('terrain/water');
@@ -12,18 +14,51 @@ define(function (require) {
 		types: [Grass, Stone, Water],
 		probMultiplier: 2,
 
-		// We get a partial grid (2d) to generate on.
-		generate: function (grid) {
-			for (var x=0; x<grid.length; x++) {
-				for (var y=0; y<grid[x].length; y++) {
-					grid[x][y].occupant(this.pick(grid[x][y]));
+		generate: function (grid, options) {
+			options = _.defaults(options || {}, {
+				z: 0,
+				iterations: 1
+			});
+
+			var plane = grid.matrix[options.z];
+
+			this.generateRandomPlane(plane);
+
+			for (var i=0; i<options.iterations; i++) {
+				plane = this.iteration(plane);
+			}
+
+			return grid;
+		},
+
+		generateRandomPlane: function (plane) {
+			for (var x=0; x<plane.length; x++) {
+				for (var y=0; y<plane[x].length; y++) {
+					plane[x][y].occupant(this.pickRandom(plane[x][y]));
 				}
 			}
 		},
 
-		pick: function (cell) {
+		pickRandom: function () {
+			return new this.types[Math.floor(Math.random() * this.types.length)]();
+		},
+
+		iteration: function (plane) {
+			// Create a new plane so picking/probability is totally based
+			// on previous iteration and not our current modifications.
+			var newPlane = new Grid(plane.length+1,plane[0].length+1, 1).matrix[0];
+			for (var x=0; x<plane.length; x++) {
+				for (var y=0; y<plane[x].length; y++) {
+					newPlane[x][y].occupant(this.pickProbable(plane[x][y]));
+				}
+			}
+
+			return newPlane;
+		},
+
+		pickProbable: function (cell) {
 			var adjacent = [];
-			adjacent[2] = cell.adjacent(2);
+			adjacent.neighbors8 = cell.adjacent('neighbors8');
 
 			return this.probability(cell, adjacent);
 		},
@@ -53,62 +88,54 @@ define(function (require) {
 		},
 
 		probability: function (cell, adjacent) {
-			var self = this, probValues = {}, probRange = [], i=0;
+			var self = this, probTypes = {}, probRange = [], i=0;
 
-			// Create probability range
+			// Create probability range for all cellTypes and pick one.
 			_.each(this.types, function (type) {
-				var p, probability = type.prototype.probability, lastType;
+				var p, lastType,
+					cellProb = type.prototype.probability,
+					cellType = type.prototype.type;
 
 				// base probability
-				p = probability.create.base * self.probMultiplier;
+				p = cellProb.create.base * self.probMultiplier;
 
 				// do we need to check for adjacent cells?
-				if (probability.create.adjacent) {
-
-					// check only adjacent types defined
-					_.each(_.keys(probability.create.adjacent), function (adjType) {
+				if (cellProb.create.adjacent) {
+					// check all adjacent types we need
+					_.each(_.keys(cellProb.create.adjacent), function (adjType) {
+						// Do all the different kinds of checking we need.
 						if (adjacent[adjType]) {
 
 							// matchTyping
-							if (probability.create.adjacent[adjType].matchType) {
-								p = p * self.matchType(probability.create.adjacent[adjType].matchType, type.prototype.type, adjacent[adjType]);
+							if (cellProb.create.adjacent[adjType].matchType) {
+								p = p * self.matchType(cellProb.create.adjacent[adjType].matchType, cellType, adjacent[adjType]);
 							}
 
+							// That's all :)
 						}
 					});
 				}
 
 
-				probValues[i] = p;
+				probTypes[i] = p;
 				i++;
 			});
 
-			var probSum = 0;
-			_.each(probValues, function (n) { probSum += n; });
+			return new this.types[this.probableKey(probTypes)]();
+		},
 
-			var r = Math.random() * probSum;
-			var lower = 0;
-			var type = null;
+		probableKey: function (probValues) {
+			var probSum = _.reduce(probValues, function (a,b) { return a + b; }),
+				r = Math.random() * probSum,
+				lower = 0;
+
 			for (var j in probValues) {
 				if (r >= lower && r < lower + probValues[j]) {
-					console.log('MATCHED A TYPE. CUNT!');
-					type = this.types[j];
-					break;
+					return j;
 				}
 
 				lower += probValues[j];
 			}
-
-			return new type();
-			// return this.random(probRange.length ? probRange : this.types);
-
-			/*
-			_.each(adjacent, function (neighbor) {
-				if (neighbor.occupant()) {
-					console.log('My lovely neigbor', neighbor.occupant().base, neighbor.occupant().type);
-				}
-			});
-			*/
 		}
 
 	};

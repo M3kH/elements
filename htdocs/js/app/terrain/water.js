@@ -12,14 +12,13 @@ define(function (require) {
 		//probability multipliers
 		probability: {
 			create: {
-				base: 0.5,
+				base: 0.7,
 				adjacent: {
-					2: { // neigbors
+					neighbors8: {
 						matchType: {
-							_random: 0.6,
-							water: 8,
+							water: 2.2,
 							grass: 0,
-							stone: 0,
+							stone: 0
 						}
 					},
 

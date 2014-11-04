@@ -60,26 +60,22 @@ define(function (require) {
 			setTimeout(function () {
 				self._createGrid();
 				self.viewport.hideNotice();
-			}, 1000);
+			}, 200);
 		},
 
 		_createGrid: function () {
-			// Create grid and viewport and tie it all together.
 			console.time('create:grid');
-			this.grid = new Grid(64,64,10);
-
+			this.grid = new Grid(100,100,2);
 			console.timeEnd('create:grid');
 
-			// Terrain lives on the bottom level of our grid.
 			console.time('create:terrain');
-			this.terrain = new Terrain(this.grid, 0);
-
-			// In the future we could fetch/set pre-generated terrains.
-			this.terrain.generate();
+			this.terrain = Terrain.generate(this.grid);
 			console.timeEnd('create:terrain');
 
 			console.time('create:render');
-			this.viewport.insertGrid(rdr.grid(this.grid).render());
+			this.viewport.insertGrid(rdr.grid(this.grid).render(
+				this.viewport.el.offsetWidth, this.viewport.el.offsetHeight
+			));
 			console.timeEnd('create:render');
 
 			this.viewport.hideNotice();
